@@ -91,7 +91,7 @@ function getDevicePath(url) {
             console.log('Native URI for: ' + platform + " is " + NativeUrl);
             //playAudio(NativeUrl + "www/" + url);
         });*/
-    } else if (platform == "ios") {
+    } else if (platform == "android") {
         var internalUrl = "cdvfile://localhost/asset/";
         playAudio(internalUrl + "www/" + url);
     };
