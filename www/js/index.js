@@ -71,7 +71,7 @@ entry produces
 {"isFile":false,"isDirectory":true,"name":"","fullPath":"/","filesystem":"<FileSystem: bundle>","nativeURL":"file:///var/containers/Bundle/Application/C28EF4A2-6EED-4E5A-999F-E05CCAF1F587/PhoneGap.app/"}
 
 entry.toInternalURL()
-cdvfile://localhost/bundle/www/audio/drums.mp3
+cdvfile://localhost/bundle/www/audio/drums.mp3 //works on build if hardcoded
 
 entry.toURL()
 file:///var/containers/Bundle/Application/C28EF4A2-6EED-4E5A-999F-E05CCAF1F587/PhoneGap.app/
@@ -81,17 +81,20 @@ function getDevicePath(url) {
     var platform = device.platform;
     platform = platform.toLowerCase();
     //console.log(cordova.file.applicationDirectory);
-    //if (platform == "android") {
+    if (platform == "ios") {
         //console.log('yes is android');
-        var NativeUrl = "cdvfile://localhost/bundle/";
-        playAudio(NativeUrl + "www/" + url);
-        resolveLocalFileSystemURL(cordova.file.applicationDirectory, function(entry){
+        var internalUrl = "cdvfile://localhost/bundle/";
+        playAudio(internalUrl + "www/" + url);
+        /*resolveLocalFileSystemURL(cordova.file.applicationDirectory, function(entry){
             console.log(JSON.stringify(entry) );
             var NativeUrl = entry.toURL();
             console.log('Native URI for: ' + platform + " is " + NativeUrl);
             //playAudio(NativeUrl + "www/" + url);
-        });
-    //};
+        });*/
+    } else if (platform == "ios") {
+        var internalUrl = "cdvfile://localhost/asset/";
+        playAudio(internalUrl + "www/" + url);
+    };
     //console.log(NativeUrl);
     //return url;
 }
