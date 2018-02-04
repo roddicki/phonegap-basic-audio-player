@@ -92,7 +92,7 @@ function getDevicePath(url) {
             //playAudio(NativeUrl + "www/" + url);
         });*/
     } else if (platform == "android") {
-        var internalUrl = "cdvfile://localhost/asset/";
+        var internalUrl = "file:///android_asset/";
         playAudio(internalUrl + "www/" + url);
     };
     //console.log(NativeUrl);
