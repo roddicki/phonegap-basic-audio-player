@@ -17,7 +17,8 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        playAudio("audio/drums.mp3");
+        //playAudio("audio/drums.mp3");
+        getDevicePath("audio/drums.mp3");
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -33,13 +34,10 @@ var app = {
 };
 
 // Play audio
-//b
 function playAudio(url) {
-    //getPhoneGapPath();
-    //url = cordova.file.applicationDirectory + "www/" + url;
+    /*console.log(path);
+    var url = getDevicePath(path);*/
     console.log(url);
-    //console.log(cordova.file.applicationDirectory + "www/");
-    // Play the audio file at url
     var my_media = new Media(url,
         // success callback
         function () { console.log("playAudio():Audio Success"); },
@@ -56,28 +54,46 @@ function playAudio(url) {
     }, 7000);
 }
 
-//MEDIA PLUGIN FUNCTIONS
-//get the file location path for each device type
-function getPhoneGapPath() {
-    var path = "";
-    //for testing only
-    /*loc = window.location.pathname;
-    path = loc.substr(0,loc.length-10);
-    console.log(path);*/
-    //end testing
-    
-    
-    window.resolveLocalFileSystemURL(cordova.file.applicationDirectory, 
-        function (fileEntry) {
-            path = fileEntry.toURL();
-            console.log(path);
-        }, 
-        function (e) {
-            console.log("FileSystem Error");
-            console.log(JSON.stringify(e) );
-        }
-    );
-    return path;
+/*file paths
+
+=android=
+entry produces
+{"isFile":false,"isDirectory":true,"name":"","fullPath":"/","filesystem":"<FileSystem: assets>","nativeURL":"file:///android_asset/"}
+
+entry.toURL()
+file:///android_asset/www/audio/drums.mp3 //works on build if hardcoded
+
+entry.toInternalURL()
+cdvfile://localhost/asset/www/audio/drums.mp3
+
+=ios=
+entry produces
+{"isFile":false,"isDirectory":true,"name":"","fullPath":"/","filesystem":"<FileSystem: bundle>","nativeURL":"file:///var/containers/Bundle/Application/C28EF4A2-6EED-4E5A-999F-E05CCAF1F587/PhoneGap.app/"}
+
+entry.toInternalURL()
+cdvfile://localhost/bundle/www/audio/drums.mp3
+
+entry.toURL()
+file:///var/containers/Bundle/Application/C28EF4A2-6EED-4E5A-999F-E05CCAF1F587/PhoneGap.app/
+*/
+
+function getDevicePath(url) {
+    var platform = device.platform;
+    platform = platform.toLowerCase();
+    //console.log(cordova.file.applicationDirectory);
+    //if (platform == "android") {
+        //console.log('yes is android');
+        var NativeUrl = "cdvfile://localhost/bundle/";
+        playAudio(NativeUrl + "www/" + url);
+        resolveLocalFileSystemURL(cordova.file.applicationDirectory, function(entry){
+            console.log(JSON.stringify(entry) );
+            var NativeUrl = entry.toURL();
+            console.log('Native URI for: ' + platform + " is " + NativeUrl);
+            //playAudio(NativeUrl + "www/" + url);
+        });
+    //};
+    //console.log(NativeUrl);
+    //return url;
 }
 
 
