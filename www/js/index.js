@@ -35,14 +35,16 @@ var app = {
 // Play audio
 //b
 function playAudio(url) {
+    //getPhoneGapPath();
+    url = 'file:///android_asset/www/' + url;
     console.log(url);
-    url = getPhoneGapPath() + url;
+    //console.log(cordova.file.applicationDirectory + "www/");
     // Play the audio file at url
     var my_media = new Media(url,
         // success callback
         function () { console.log("playAudio():Audio Success"); },
         // error callback
-        function (err) { console.log("playAudio():Audio Error: " + err); }
+        function (err) { console.log("playAudio():Audio Error: " + JSON.stringify(err)); }
     );
 
     // Play audio
@@ -59,12 +61,12 @@ function playAudio(url) {
 function getPhoneGapPath() {
     var path = "";
     //for testing only
-    loc = window.location.pathname;
+    /*loc = window.location.pathname;
     path = loc.substr(0,loc.length-10);
-    console.log(path);
+    console.log(path);*/
     //end testing
     
-    /* uncomment for build
+    
     window.resolveLocalFileSystemURL(cordova.file.applicationDirectory, 
         function (fileEntry) {
             path = fileEntry.toURL();
@@ -75,9 +77,7 @@ function getPhoneGapPath() {
             console.log(JSON.stringify(e) );
         }
     );
-    console.log(path);*/
     return path;
 }
 
-console.log(getPhoneGapPath());
 
