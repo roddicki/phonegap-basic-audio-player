@@ -80,7 +80,7 @@ file:///var/containers/Bundle/Application/C28EF4A2-6EED-4E5A-999F-E05CCAF1F587/P
 function getDevicePath(url) {
     var platform = device.platform;
     platform = platform.toLowerCase();
-    //console.log(cordova.file.applicationDirectory);
+    console.log("window.location.pathname " + window.location.pathname);
     if (platform == "ios") {
         //console.log('yes is android');
         var internalUrl = "cdvfile://localhost/bundle/";
