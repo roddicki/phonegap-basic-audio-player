@@ -36,7 +36,7 @@ var app = {
 //b
 function playAudio(url) {
     //getPhoneGapPath();
-    url = cordova.file.applicationDirectory + "www/" + url;
+    //url = cordova.file.applicationDirectory + "www/" + url;
     console.log(url);
     //console.log(cordova.file.applicationDirectory + "www/");
     // Play the audio file at url
