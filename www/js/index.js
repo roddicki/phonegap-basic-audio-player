@@ -36,7 +36,7 @@ var app = {
 //b
 function playAudio(url) {
     //getPhoneGapPath();
-    url = 'file:///android_asset/www/' + url;
+    url = 'cdvfile://localhost/www/' + url;
     console.log(url);
     //console.log(cordova.file.applicationDirectory + "www/");
     // Play the audio file at url
